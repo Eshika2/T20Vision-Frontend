@@ -5,10 +5,10 @@ function MainLayout({ children }) {
   return (
     <div className="min-h-screen bg-slate-50">
       <Navbar />
-      <div className="flex">
-        <Sidebar />
-        <main className="flex-1 p-6 md:p-8">{children}</main>
-      </div>
+      <Sidebar />
+      <main className="p-6 md:p-8 md:ml-72">
+        {children}
+      </main>
     </div>
   )
 }
