@@ -100,6 +100,12 @@ function LoginPage() {
           placeholder="Enter your password"
         />
 
+        <div className="text-right">
+          <Link to="/forgot-password" className="text-sm text-blue-600 font-medium hover:underline">
+            Forgot Password?
+          </Link>
+        </div>
+
         <Button type="submit" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </Button>

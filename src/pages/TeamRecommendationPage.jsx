@@ -1,16 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import MainLayout from '../layouts/MainLayout'
 import InputField from '../components/InputField'
 import Button from '../components/Button'
+import SearchableSelectField from '../components/SearchableSelectField'
 import TeamRecommendationResult from '../components/TeamRecommendationResult'
-import { getTeamRecommendation } from '../api/teamPredictionApi'
+import {
+  getTeamRecommendation,
+  getTeamTeams,
+  getTeamVenues,
+} from '../api/teamPredictionApi'
 
 function TeamRecommendationPage() {
   const [form, setForm] = useState({
-    my_team: '',
-    opponent_team: '',
-    venue: '',
+    my_team: null,
+    opponent_team: null,
+    venue: null,
     batters: '5',
     bowlers: '3',
     allrounders: '3',
@@ -18,10 +23,92 @@ function TeamRecommendationPage() {
     end_year: '2026',
   })
 
+  const [teams, setTeams] = useState([])
+  const [venues, setVenues] = useState([])
+  const [loadingTeams, setLoadingTeams] = useState(false)
+  const [loadingVenues, setLoadingVenues] = useState(false)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
 
-  const handleChange = (e) => {
+  useEffect(() => {
+    fetchTeams()
+  }, [])
+
+  useEffect(() => {
+    const myTeam = form.my_team?.value
+    const opponentTeam = form.opponent_team?.value
+
+    if (myTeam && opponentTeam && myTeam !== opponentTeam) {
+      fetchVenues(myTeam, opponentTeam)
+    } else {
+      setVenues([])
+      setForm((prev) => ({
+        ...prev,
+        venue: null,
+      }))
+    }
+  }, [form.my_team, form.opponent_team])
+
+  const teamOptions = useMemo(
+    () => teams.map((team) => ({ value: team, label: team })),
+    [teams]
+  )
+
+  const venueOptions = useMemo(
+    () => venues.map((venue) => ({ value: venue, label: venue })),
+    [venues]
+  )
+
+  const fetchTeams = async () => {
+    setLoadingTeams(true)
+
+    try {
+      const response = await getTeamTeams()
+
+      if (response?.success) {
+        setTeams(response?.output?.teams || [])
+      } else {
+        toast.error(response?.message || 'Failed to load teams')
+      }
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          'Something went wrong while loading teams'
+      )
+    } finally {
+      setLoadingTeams(false)
+    }
+  }
+
+  const fetchVenues = async (team1, team2) => {
+    setLoadingVenues(true)
+
+    try {
+      const response = await getTeamVenues({
+        team1,
+        team2,
+        start_year: Number(form.start_year),
+        end_year: Number(form.end_year),
+      })
+
+      if (response?.success) {
+        setVenues(response?.output?.venues || [])
+      } else {
+        toast.error(response?.message || 'Failed to load venues')
+      }
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          'Something went wrong while loading venues'
+      )
+    } finally {
+      setLoadingVenues(false)
+    }
+  }
+
+  const handleInputChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
@@ -32,9 +119,9 @@ function TeamRecommendationPage() {
 
     try {
       const payload = {
-        my_team: form.my_team,
-        opponent_team: form.opponent_team,
-        venue: form.venue,
+        my_team: form.my_team?.value || '',
+        opponent_team: form.opponent_team?.value || '',
+        venue: form.venue?.value || '',
         batters: Number(form.batters),
         bowlers: Number(form.bowlers),
         allrounders: Number(form.allrounders),
@@ -71,28 +158,42 @@ function TeamRecommendationPage() {
           </p>
 
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-6">
-            <InputField
+            <SearchableSelectField
               label="My Team"
-              name="my_team"
               value={form.my_team}
-              onChange={handleChange}
-              placeholder="e.g. Sri Lanka"
+              onChange={(selected) =>
+                setForm((prev) => ({ ...prev, my_team: selected }))
+              }
+              options={teamOptions}
+              placeholder={loadingTeams ? 'Loading teams...' : 'Search my team'}
+              isDisabled={loadingTeams}
             />
 
-            <InputField
+            <SearchableSelectField
               label="Opponent Team"
-              name="opponent_team"
               value={form.opponent_team}
-              onChange={handleChange}
-              placeholder="e.g. Australia"
+              onChange={(selected) =>
+                setForm((prev) => ({ ...prev, opponent_team: selected }))
+              }
+              options={teamOptions}
+              placeholder={loadingTeams ? 'Loading teams...' : 'Search opponent team'}
+              isDisabled={loadingTeams}
             />
 
-            <InputField
+            <SearchableSelectField
               label="Venue"
-              name="venue"
               value={form.venue}
-              onChange={handleChange}
-              placeholder="e.g. Pallekele International Cricket Stadium"
+              onChange={(selected) =>
+                setForm((prev) => ({ ...prev, venue: selected }))
+              }
+              options={venueOptions}
+              placeholder={
+                loadingVenues
+                  ? 'Loading venues...'
+                  : 'Search venue or type a new venue'
+              }
+              isCreatable
+              isDisabled={!form.my_team || !form.opponent_team || loadingVenues}
             />
 
             <InputField
@@ -100,7 +201,7 @@ function TeamRecommendationPage() {
               name="batters"
               type="number"
               value={form.batters}
-              onChange={handleChange}
+              onChange={handleInputChange}
               placeholder="5"
             />
 
@@ -109,7 +210,7 @@ function TeamRecommendationPage() {
               name="bowlers"
               type="number"
               value={form.bowlers}
-              onChange={handleChange}
+              onChange={handleInputChange}
               placeholder="3"
             />
 
@@ -118,7 +219,7 @@ function TeamRecommendationPage() {
               name="allrounders"
               type="number"
               value={form.allrounders}
-              onChange={handleChange}
+              onChange={handleInputChange}
               placeholder="3"
             />
 
@@ -127,7 +228,7 @@ function TeamRecommendationPage() {
               name="start_year"
               type="number"
               value={form.start_year}
-              onChange={handleChange}
+              onChange={handleInputChange}
               placeholder="2023"
             />
 
@@ -136,7 +237,7 @@ function TeamRecommendationPage() {
               name="end_year"
               type="number"
               value={form.end_year}
-              onChange={handleChange}
+              onChange={handleInputChange}
               placeholder="2026"
             />
 

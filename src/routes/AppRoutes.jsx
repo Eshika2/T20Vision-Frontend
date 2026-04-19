@@ -7,12 +7,14 @@ import ScorePredictionPage from '../pages/ScorePredictionPage'
 import TeamRecommendationPage from '../pages/TeamRecommendationPage'
 import PredictionHistoryPage from '../pages/PredictionHistoryPage'
 import PrivateRoute from './PrivateRoute'
+import ForgotPasswordPage from '../pages/ForgotPasswordPage'
 
 function AppRoutes() {
   return (
     <Routes path="/">
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
       <Route path="/*" element={<LoginPage />} />
 

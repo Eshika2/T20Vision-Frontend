@@ -19,3 +19,18 @@ export const logoutUser = async () => {
   const response = await axiosInstance.post('/logout')
   return response.data
 }
+
+export const generateOtp = async (payload) => {
+  const response = await axiosInstance.post('/auth/otp/generate', payload)
+  return response.data
+}
+
+export const verifyOtp = async (payload) => {
+  const response = await axiosInstance.post('/auth/otp/verify', payload)
+  return response.data
+}
+
+export const resetPassword = async (payload) => {
+  const response = await axiosInstance.post('/user/password/reset', payload)
+  return response.data
+}
