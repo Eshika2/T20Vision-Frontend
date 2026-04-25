@@ -59,33 +59,41 @@ function PredictionHistoryPage() {
 
   return (
     <MainLayout>
-      <div className="max-w-7xl mx-auto space-y-8">
-        <div className="rounded-3xl bg-white border border-slate-200 p-6 md:p-8 shadow-sm">
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-800">Prediction History</h2>
-          <p className="text-slate-500 mt-2">
+      <div className="mx-auto max-w-7xl space-y-8">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-8">
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 md:text-3xl">
+            Prediction History
+          </h2>
+          <p className="mt-2 text-slate-500 dark:text-slate-400">
             View all your past win predictions, score predictions, and team recommendations.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="rounded-2xl bg-blue-50 border border-blue-100 p-5">
-            <p className="text-sm text-slate-500">Win Predictions</p>
-            <p className="text-3xl font-bold text-blue-700">{history.counts?.win_predictions ?? 0}</p>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="rounded-2xl border border-blue-100 bg-blue-50 p-5 dark:border-blue-900 dark:bg-blue-950/40">
+            <p className="text-sm text-slate-500 dark:text-slate-400">Win Predictions</p>
+            <p className="text-3xl font-bold text-blue-700 dark:text-blue-400">
+              {history.counts?.win_predictions ?? 0}
+            </p>
           </div>
 
-          <div className="rounded-2xl bg-green-50 border border-green-100 p-5">
-            <p className="text-sm text-slate-500">Score Predictions</p>
-            <p className="text-3xl font-bold text-green-700">{history.counts?.score_predictions ?? 0}</p>
+          <div className="rounded-2xl border border-green-100 bg-green-50 p-5 dark:border-green-900 dark:bg-green-950/40">
+            <p className="text-sm text-slate-500 dark:text-slate-400">Score Predictions</p>
+            <p className="text-3xl font-bold text-green-700 dark:text-green-400">
+              {history.counts?.score_predictions ?? 0}
+            </p>
           </div>
 
-          <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5">
-            <p className="text-sm text-slate-500">Team Recommendations</p>
-            <p className="text-3xl font-bold text-slate-800">{history.counts?.team_recommendations ?? 0}</p>
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800">
+            <p className="text-sm text-slate-500 dark:text-slate-400">Team Recommendations</p>
+            <p className="text-3xl font-bold text-slate-800 dark:text-slate-100">
+              {history.counts?.team_recommendations ?? 0}
+            </p>
           </div>
         </div>
 
         {loading ? (
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
+          <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
             Loading history...
           </div>
         ) : (
@@ -101,7 +109,7 @@ function PredictionHistoryPage() {
                     <WinHistoryCard key={item.id} item={item} />
                   ))
                 ) : (
-                  <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-slate-500">
+                  <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
                     No win prediction history found.
                   </div>
                 )}
@@ -119,7 +127,7 @@ function PredictionHistoryPage() {
                     <ScoreHistoryCard key={item.id} item={item} />
                   ))
                 ) : (
-                  <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-slate-500">
+                  <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
                     No score prediction history found.
                   </div>
                 )}
@@ -137,7 +145,7 @@ function PredictionHistoryPage() {
                     <TeamHistoryCard key={item.id} item={item} />
                   ))
                 ) : (
-                  <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-slate-500">
+                  <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
                     No team recommendation history found.
                   </div>
                 )}

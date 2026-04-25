@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
+import { TbLogout2 } from 'react-icons/tb'
 import { useAuth } from '../context/AuthContext'
 
 function Sidebar() {
@@ -19,20 +20,25 @@ function Sidebar() {
 
   return (
     <aside className="fixed left-0 top-[81px] hidden h-[calc(100vh-81px)] w-72 overflow-y-auto border-r border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900 md:block">
-      <nav className="space-y-2">
-        <NavLink to="/dashboard" className={menuClass}>Dashboard</NavLink>
-        <NavLink to="/win-prediction" className={menuClass}>Win Prediction</NavLink>
-        <NavLink to="/score-prediction" className={menuClass}>Score Prediction</NavLink>
-        <NavLink to="/team-recommendation" className={menuClass}>Team Recommendation</NavLink>
-        <NavLink to="/prediction-history" className={menuClass}>Prediction History</NavLink>
+      <div className="flex h-full flex-col justify-between">
+        <nav className="space-y-2">
+          <NavLink to="/dashboard" className={menuClass}>Dashboard</NavLink>
+          <NavLink to="/win-prediction" className={menuClass}>Win Prediction</NavLink>
+          <NavLink to="/score-prediction" className={menuClass}>Score Prediction</NavLink>
+          <NavLink to="/team-recommendation" className={menuClass}>Team Recommendation</NavLink>
+          <NavLink to="/prediction-history" className={menuClass}>Prediction History</NavLink>
+        </nav>
 
-        <button
-          onClick={handleLogout}
-          className="w-full rounded-lg px-4 py-3 text-left text-sm font-medium text-red-600 transition hover:bg-red-50 dark:text-red-400 dark:hover:bg-slate-800"
-        >
-          Logout
-        </button>
-      </nav>
+        <div className="pt-4">
+          <button
+            onClick={handleLogout}
+            className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium text-red-600 transition hover:bg-red-50 dark:text-red-400 dark:hover:bg-slate-800"
+          >
+            <TbLogout2 className="text-lg" />
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
     </aside>
   )
 }

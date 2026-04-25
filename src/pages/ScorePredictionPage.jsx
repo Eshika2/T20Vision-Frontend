@@ -194,7 +194,7 @@ function ScorePredictionPage() {
                 isCreatable
                 isDisabled={!form.batting_team || !form.bowling_team || loadingVenues}
               />
-              <p className="text-xs text-slate-500 mt-2">
+              <p className="text-xs text-slate-500 dark:text-slate-200 mt-2">
                 Select a venue from suggestions, or type a new venue if it is not listed.
               </p>
             </div>

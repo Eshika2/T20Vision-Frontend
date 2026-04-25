@@ -1,50 +1,71 @@
+import HistoryAccordion from './HistoryAccordion'
+
 function TeamHistoryCard({ item }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-        <div>
-          <p className="text-xs font-medium text-slate-400">Team Recommendation</p>
-          <h4 className="text-lg font-bold text-slate-800 mt-1">
-            {item.my_team} vs {item.opponent_team}
-          </h4>
-          <p className="text-sm text-slate-500 mt-1">{item.venue}</p>
-          <p className="text-sm text-slate-500 mt-2">
-            Batters: <span className="font-medium text-slate-700">{item.batters}</span> | Bowlers:{' '}
-            <span className="font-medium text-slate-700">{item.bowlers}</span> | Allrounders:{' '}
-            <span className="font-medium text-slate-700">{item.allrounders}</span> | Years:{' '}
-            <span className="font-medium text-slate-700">{item.start_year} - {item.end_year}</span>
+    <HistoryAccordion
+      label="Team Recommendation"
+      title={`${item.my_team} vs ${item.opponent_team}`}
+      subtitle={`${item.venue} • ${item.start_year} - ${item.end_year}`}
+      dateTime={item.created_at}
+      status={item.status}
+    >
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="rounded-xl border border-blue-100 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950/40">
+            <p className="text-sm text-slate-500 dark:text-slate-400">Available Players</p>
+            <p className="text-2xl font-bold text-blue-700 dark:text-blue-400">
+              {item.available_players ?? 0}
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
+            <p className="text-sm text-slate-500 dark:text-slate-400">Batters</p>
+            <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">
+              {item.batters}
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
+            <p className="text-sm text-slate-500 dark:text-slate-400">Bowlers</p>
+            <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">
+              {item.bowlers}
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
+            <p className="text-sm text-slate-500 dark:text-slate-400">Allrounders</p>
+            <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">
+              {item.allrounders}
+            </p>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
+          <p className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-200">
+            Recommended Team
           </p>
-        </div>
 
-        <div className="text-sm text-slate-500 md:text-right">
-          <p>{item.created_at}</p>
-          <p className="mt-2">
-            Status:{' '}
-            <span className={item.status === 1 ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'}>
-              {item.status === 1 ? 'Success' : 'Failed'}
-            </span>
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-4 rounded-xl bg-blue-50 border border-blue-100 p-4">
-        <p className="text-sm text-slate-500">Available Players</p>
-        <p className="text-2xl font-bold text-blue-700">{item.available_players ?? 0}</p>
-      </div>
-
-      <div className="mt-4">
-        <p className="text-sm font-semibold text-slate-700 mb-3">Recommended Team</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
-          {(item.recommended_team || []).map((player, index) => (
-            <div key={index} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-              <p className="font-semibold text-slate-800">{player.player}</p>
-              <p className="text-sm text-blue-700 capitalize mt-1">{player.role}</p>
-              <p className="text-sm text-green-700 font-medium mt-1">Reward: {player.reward}</p>
-            </div>
-          ))}
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {(item.recommended_team || []).map((player, index) => (
+              <div
+                key={index}
+                className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-600 dark:bg-slate-900"
+              >
+                <p className="font-semibold text-slate-800 dark:text-slate-100">
+                  {player.player}
+                </p>
+                <p className="mt-1 text-sm capitalize text-blue-700 dark:text-blue-400">
+                  {player.role}
+                </p>
+                <p className="mt-1 text-sm font-medium text-green-700 dark:text-green-400">
+                  Reward: {player.reward}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </HistoryAccordion>
   )
 }
 

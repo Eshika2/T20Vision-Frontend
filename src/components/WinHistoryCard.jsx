@@ -1,44 +1,43 @@
+import HistoryAccordion from './HistoryAccordion'
+
 function WinHistoryCard({ item }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-        <div>
-          <p className="text-xs font-medium text-slate-400">Win Prediction</p>
-          <h4 className="text-lg font-bold text-slate-800 mt-1">
-            {item.batting_team} vs {item.bowling_team}
-          </h4>
-          <p className="text-sm text-slate-500 mt-1">{item.venue}</p>
-          <p className="text-sm text-slate-500 mt-2">
-            Target: <span className="font-medium text-slate-700">{item.target}</span> | Score:{' '}
-            <span className="font-medium text-slate-700">{item.score}</span> | Overs:{' '}
-            <span className="font-medium text-slate-700">{item.overs_completed}</span> | Wickets:{' '}
-            <span className="font-medium text-slate-700">{item.wickets_out}</span>
+    <HistoryAccordion
+      label="Win Prediction"
+      title={`${item.batting_team} vs ${item.bowling_team}`}
+      subtitle={`${item.venue} • Target ${item.target} • Score ${item.score}`}
+      dateTime={item.created_at}
+      status={item.status}
+    >
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="rounded-xl border border-blue-100 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950/40">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {item.batting_team} Win Probability
+          </p>
+          <p className="text-2xl font-bold text-blue-700 dark:text-blue-400">
+            {item.batting_win_probability}%
           </p>
         </div>
 
-        <div className="text-sm text-slate-500 md:text-right">
-          <p>{item.created_at}</p>
-          <p className="mt-2">
-            Status:{' '}
-            <span className={item.status === 1 ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'}>
-              {item.status === 1 ? 'Success' : 'Failed'}
-            </span>
+        <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {item.bowling_team} Win Probability
+          </p>
+          <p className="text-2xl font-bold text-slate-700 dark:text-slate-200">
+            {item.bowling_win_probability}%
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800 md:col-span-2">
+          <p className="text-sm text-slate-500 dark:text-slate-400">Match Details</p>
+          <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">
+            Overs Completed:{' '}
+            <span className="font-semibold">{item.overs_completed}</span> | Wickets Out:{' '}
+            <span className="font-semibold">{item.wickets_out}</span>
           </p>
         </div>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        <div className="rounded-xl bg-blue-50 border border-blue-100 p-4">
-          <p className="text-sm text-slate-500">{item.batting_team} Win Probability</p>
-          <p className="text-2xl font-bold text-blue-700">{item.batting_win_probability}%</p>
-        </div>
-
-        <div className="rounded-xl bg-slate-50 border border-slate-200 p-4">
-          <p className="text-sm text-slate-500">{item.bowling_team} Win Probability</p>
-          <p className="text-2xl font-bold text-slate-700">{item.bowling_win_probability}%</p>
-        </div>
-      </div>
-    </div>
+    </HistoryAccordion>
   )
 }
 
