@@ -27,21 +27,28 @@ function DashboardPage() {
 
   return (
     <MainLayout>
-      <section className="bg-gradient-to-r from-blue-700 to-blue-500 rounded-3xl p-8 text-white shadow-lg">
+      <section className="rounded-3xl bg-gradient-to-r from-blue-700 to-blue-500 p-8 text-white shadow-lg">
         <h2 className="text-3xl font-bold">Cricket Match Intelligence</h2>
-        <p className="mt-3 text-blue-50 max-w-2xl">
+        <p className="mt-3 max-w-2xl text-blue-50">
           Use machine learning powered insights for win probability, score forecasting, and team recommendation.
         </p>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-8">
+      <section className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
         {cards.map((card, index) => (
-          <div key={index} className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition">
-            <h3 className="text-xl font-semibold text-slate-800">{card.title}</h3>
-            <p className="text-sm text-slate-500 mt-3 min-h-[60px]">{card.description}</p>
+          <div
+            key={index}
+            className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-slate-700 dark:bg-slate-900"
+          >
+            <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100">
+              {card.title}
+            </h3>
+            <p className="mt-3 min-h-[60px] text-sm text-slate-500 dark:text-slate-400">
+              {card.description}
+            </p>
             <Link
               to={card.link}
-              className="inline-block mt-4 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+              className="mt-4 inline-block rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
             >
               Open
             </Link>

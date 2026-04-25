@@ -149,9 +149,9 @@ function WinPredictionPage() {
   return (
     <MainLayout>
       <div className="max-w-4xl mx-auto">
-        <div className="rounded-3xl bg-white border border-slate-200 p-6 md:p-8 shadow-sm">
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-800">Win Prediction</h2>
-          <p className="text-slate-500 mt-2">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-8">
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 md:text-3xl">Win Prediction</h2>
+          <p className="mt-2 text-slate-500 dark:text-slate-400">
             Predict the win probability in a T20 chase scenario.
           </p>
 
