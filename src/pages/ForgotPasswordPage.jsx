@@ -162,16 +162,16 @@ function ForgotPasswordPage() {
     ]
 
     return (
-      <div className="flex items-center justify-center gap-3 mb-6">
+      <div className="mb-6 flex items-center justify-center gap-3">
         {steps.map((item) => (
           <div
             key={item.id}
-            className={`px-4 py-2 rounded-full text-sm font-semibold ${
+            className={`rounded-full px-4 py-2 text-sm font-semibold ${
               step === item.id
                 ? 'bg-blue-600 text-white'
                 : step > item.id
-                ? 'bg-green-100 text-green-700'
-                : 'bg-slate-100 text-slate-500'
+                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
             }`}
           >
             {item.label}
@@ -184,8 +184,10 @@ function ForgotPasswordPage() {
   return (
     <AuthLayout>
       <div className="mb-6 text-center">
-        <h2 className="text-3xl font-bold text-slate-800">Forgot Password</h2>
-        <p className="text-sm text-slate-500 mt-2">
+        <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100">
+          Forgot Password
+        </h2>
+        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
           Recover your T20Vision account in a few steps
         </p>
       </div>
@@ -228,21 +230,31 @@ function ForgotPasswordPage() {
             placeholder="Enter 6 digit OTP"
           />
 
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-            <p><span className="font-semibold">Reference:</span> {form.reference || '-'}</p>
-            <p className="mt-1"><span className="font-semibold">Remaining Attempts:</span> {otpInfo.attempt_count ?? '-'}</p>
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+            <p>
+              <span className="font-semibold">Reference:</span> {form.reference || '-'}
+            </p>
+            <p className="mt-1">
+              <span className="font-semibold">Remaining Attempts:</span> {otpInfo.attempt_count ?? '-'}
+            </p>
             <p className="mt-1">
               <span className="font-semibold">OTP Valid Time:</span>{' '}
-              <span className={countdown > 0 ? 'text-blue-700 font-bold' : 'text-red-600 font-bold'}>
+              <span
+                className={
+                  countdown > 0
+                    ? 'font-bold text-blue-700 dark:text-blue-400'
+                    : 'font-bold text-red-600 dark:text-red-400'
+                }
+              >
                 {countdown > 0 ? formatTime(countdown) : 'Expired'}
               </span>
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <Button
               type="button"
-              className="bg-slate-600 hover:bg-slate-700"
+              className="bg-slate-600 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600"
               onClick={() => setStep(1)}
             >
               Back
@@ -284,10 +296,10 @@ function ForgotPasswordPage() {
             placeholder="Confirm new password"
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <Button
               type="button"
-              className="bg-slate-600 hover:bg-slate-700"
+              className="bg-slate-600 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600"
               onClick={() => setStep(2)}
             >
               Back
@@ -300,9 +312,12 @@ function ForgotPasswordPage() {
         </form>
       )}
 
-      <p className="text-center text-sm text-slate-600 mt-6">
+      <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
         Remember your password?{' '}
-        <Link to="/login" className="text-blue-600 font-medium hover:underline">
+        <Link
+          to="/login"
+          className="font-medium text-blue-600 hover:underline dark:text-blue-400"
+        >
           Back to Login
         </Link>
       </p>

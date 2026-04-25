@@ -69,8 +69,8 @@ function LoginPage() {
   return (
     <AuthLayout>
       <div className="mb-6 text-center">
-        <h2 className="text-3xl font-bold text-slate-800">Login</h2>
-        <p className="text-sm text-slate-500 mt-2">
+        <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100">Login</h2>
+        <p className="text-sm text-slate-500 dark:text-slate-300 mt-2">
           Welcome to T20Vision
         </p>
       </div>
@@ -101,7 +101,7 @@ function LoginPage() {
         />
 
         <div className="text-right">
-          <Link to="/forgot-password" className="text-sm text-blue-600 font-medium hover:underline">
+          <Link to="/forgot-password" className="text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline">
             Forgot Password?
           </Link>
         </div>
@@ -111,9 +111,9 @@ function LoginPage() {
         </Button>
       </form>
 
-      <p className="text-center text-sm text-slate-600 mt-6">
+      <p className="text-center text-sm text-slate-600 dark:text-slate-300 mt-6">
         Don’t have an account?{' '}
-        <Link to="/register" className="text-blue-600 font-medium hover:underline">
+        <Link to="/register" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
           Register
         </Link>
       </p>
